@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drippd | India's 1st 60-Minute Doorstep Fitting Room</title>
+<meta name="description" content="AI-powered fashion delivered in 60 minutes. Try at home, only pay for what fits. Serving Delhi NCR.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --charcoal: #1C1C1A;
+  --charcoal-s: #2A2A27;
+  --ivory: #FAFAF7;
+  --ivory-d: #F2F0E8;
+  --gold: #B8975A;
+  --gold-l: #F5EDD8;
+  --gold-d: #8C6F38;
+  --muted: #8A8880;
+  --sub: #6A6860;
+  --border: #E8E5DC;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--charcoal);
+  color: var(--ivory);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ───────────────────────────────────────────────── */
+.cursor { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; transform: translate(-50%, -50%); }
+.cursor-ring { width: 36px; height: 36px; border: 1px solid var(--gold); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.3s; transform: translate(-50%, -50%); opacity: 0.6; }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--charcoal); }
+::-webkit-scrollbar-thumb { background: var(--gold); }
+
+/* ── NAV ─────────────────────────────────────────────────────────── */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; transition: background 0.4s ease, padding 0.4s ease; }
+nav.scrolled { background: rgba(28,28,26,0.96); backdrop-filter: blur(12px); padding: 18px 48px; border-bottom: 1px solid rgba(184,151,90,0.12); }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; font-style: italic; letter-spacing: 6px; text-transform: uppercase; color: var(--ivory); text-decoration: none; display: flex; align-items: flex-start; gap: 2px; }
+.nav-logo .d-gold { color: var(--gold); }
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,250,247,0.55); text-decoration: none; transition: color 0.2s; }
+.nav-cta { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px 24px; font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; text-decoration: none; }
+
+/* ── HERO ────────────────────────────────────────────────────────── */
+#hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 140px 48px 80px; position: relative; overflow: hidden; }
+.hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 8vw, 110px); font-weight: 300; line-height: 0.95; letter-spacing: -1px; max-width: 900px; }
+.hero-h1 span { display: block; }
+.hero-h1 em { font-style: italic; color: var(--gold); }
+.btn-primary { background: var(--gold); color: var(--charcoal); border: none; padding: 16px 40px; font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; cursor: none; text-decoration: none; display: inline-block; margin-top: 40px; }
+
+/* ── WAITLIST SECTION ────────────────────────────────────────────── */
+#waitlist { background: var(--charcoal); padding: 120px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.waitlist-form { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 500px; margin-top: 40px; }
+.waitlist-input { background: rgba(255,255,255,0.04); border: 1px solid rgba(184,151,90,0.2); color: var(--ivory); padding: 16px 20px; font-size: 14px; outline: none; transition: all 0.25s; width: 100%; }
+.waitlist-input:focus { border-color: var(--gold); background: rgba(184,151,90,0.05); }
+.btn-submit { background: var(--gold); color: var(--charcoal); border: none; padding: 18px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: none; width: 100%; transition: transform 0.2s; }
+.btn-submit:hover { transform: translateY(-2px); }
+
+/* SUCCESS STATE STYLES */
+.success-container { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.8s ease forwards; }
+.success-card { background: rgba(184,151,90,0.05); border: 1px solid var(--gold); padding: 40px; border-radius: 4px; max-width: 450px; margin-top: 20px; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Dripp<span class="d-gold">d</span></a>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-eyebrow" style="color: var(--gold); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;">✦ Delhi NCR · Launching 2026</div>
+  <h1 class="hero-h1">
+    <span>The 60-Minute</span>
+    <em>Fitting Room.</em>
+  </h1>
+  <p style="font-size: 16px; color: rgba(250,250,247,0.5); max-width: 450px; line-height: 1.8; margin-top: 30px;">AI-powered style matching delivered to your door. Try 5 items from local boutiques—only pay for what fits.</p>
+  <a href="#waitlist" class="btn-primary">Secure Early Access</a>
+</section>
+
+<section id="waitlist">
+  <div id="form-wrapper" style="width: 100%;">
+    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300;">Be First. <em>Dress First.</em></h2>
+    <p style="color: var(--muted); margin-bottom: 20px;">Join 500+ style-insiders waiting for the launch.</p>
+    
+    <form id="drippd-form" action="https://formspree.io/f/xgoneadj" method="POST" class="waitlist-form">
+      <input class="waitlist-input" type="text" name="name" id="userName" placeholder="Full Name" required>
+      <input class="waitlist-input" type="email" name="email" placeholder="Email Address" required>
+      <input class="waitlist-input" type="tel" name="phone" placeholder="Mobile Number (+91)" required>
+      <button type="submit" id="submit-btn" class="btn-submit">Secure My Spot</button>
+    </form>
+    <p id="form-status" style="margin-top: 15px; font-size: 12px; color: var(--gold);"></p>
+  </div>
+
+  <div id="success-message" class="success-container">
+    <div style="font-size: 50px; color: var(--gold); margin-bottom: 20px;">✦</div>
+    <div class="success-card">
+      <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--gold); margin-bottom: 10px;">You're on the list, <span id="display-name">friend</span>.</h3>
+      <p style="color: var(--ivory); font-size: 14px; line-height: 1.6;">Welcome to the inner circle. We'll reach out as soon as your neighborhood goes live in 2026.</p>
+      <div style="margin-top: 30px; background: var(--gold); color: var(--charcoal); padding: 12px; font-weight: bold; letter-spacing: 2px; font-size: 12px; text-transform: uppercase;">
+        Founding Member #0<span id="member-id"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="padding: 60px 20px; text-align: center; border-top: 1px solid rgba(184,151,90,0.1);">
+  <p style="font-size: 11px; color: var(--muted); letter-spacing: 1px;">© 2026 DRIPPD. DELHI NCR, INDIA.</p>
+</footer>
+
+<script>
+// CURSOR LOGIC
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`; });
+function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`; requestAnimationFrame(animRing); }
+animRing();
+
+// FORMSPREE SUBMISSION LOGIC
+const form = document.getElementById("drippd-form");
+const wrapper = document.getElementById("form-wrapper");
+const success = document.getElementById("success-message");
+const status = document.getElementById("form-status");
+
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
+  status.innerHTML = "Processing your entry...";
+  const nameInput = document.getElementById("userName").value;
+  const firstName = nameInput.split(' ')[0];
+  
+  const data = new FormData(event.target);
+  
+  fetch(event.target.action, {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      wrapper.style.display = "none";
+      success.
