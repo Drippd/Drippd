@@ -1,154 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drippd | India's 1st 60-Minute Doorstep Fitting Room</title>
-<meta name="description" content="AI-powered fashion delivered in 60 minutes. Try at home, only pay for what fits. Serving Delhi NCR.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ── RESET & BASE ────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --charcoal: #1C1C1A;
-  --charcoal-s: #2A2A27;
-  --ivory: #FAFAF7;
-  --ivory-d: #F2F0E8;
-  --gold: #B8975A;
-  --gold-l: #F5EDD8;
-  --gold-d: #8C6F38;
-  --muted: #8A8880;
-  --sub: #6A6860;
-  --border: #E8E5DC;
-}
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Jost', sans-serif;
-  background: var(--charcoal);
-  color: var(--ivory);
-  overflow-x: hidden;
-  cursor: none;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drippd | India's 1st 60-Minute Doorstep Fitting Room</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Jost:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF7; /* Warm Paper */
+            --accent: #FF5C00; /* Tangerine Tech */
+            --text: #1C1C1A;
+            --muted: #8A8880;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+        body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        
+        /* ── NAVIGATION ── */
+        nav { padding: 30px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 100; background: rgba(250, 250, 247, 0.8); backdrop-filter: blur(10px); }
+        .logo { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; letter-spacing: 4px; text-transform: lowercase; }
+        .logo span { color: var(--accent); }
 
-/* ── CUSTOM CURSOR ───────────────────────────────────────────────── */
-.cursor { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: transform 0.15s ease; transform: translate(-50%, -50%); }
-.cursor-ring { width: 36px; height: 36px; border: 1px solid var(--gold); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.3s; transform: translate(-50%, -50%); opacity: 0.6; }
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--charcoal); }
-::-webkit-scrollbar-thumb { background: var(--gold); }
+        /* ── HERO SECTION ── */
+        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; }
+        .status-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; border: 1px solid #E8E5DC; padding: 8px 16px; border-radius: 50px; width: fit-content; }
+        .pulse { width: 6px; height: 6px; background: #22C55E; border-radius: 50%; box-shadow: 0 0 0 rgba(34, 197, 94, 0.4); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0px rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0px rgba(34, 197, 94, 0); } }
+        
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 8vw, 100px); line-height: 0.9; font-weight: 300; margin-bottom: 30px; }
+        h1 em { font-style: italic; color: var(--accent); }
 
-/* ── NAV ─────────────────────────────────────────────────────────── */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; transition: background 0.4s ease, padding 0.4s ease; }
-nav.scrolled { background: rgba(28,28,26,0.96); backdrop-filter: blur(12px); padding: 18px 48px; border-bottom: 1px solid rgba(184,151,90,0.12); }
-.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; font-style: italic; letter-spacing: 6px; text-transform: uppercase; color: var(--ivory); text-decoration: none; display: flex; align-items: flex-start; gap: 2px; }
-.nav-logo .d-gold { color: var(--gold); }
-.nav-links { display: flex; gap: 40px; align-items: center; }
-.nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,250,247,0.55); text-decoration: none; transition: color 0.2s; }
-.nav-cta { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px 24px; font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; text-decoration: none; }
+        /* ── THE AI FEATURE SECTION ── */
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 100px 5%; background: #1C1C1A; color: var(--bg); }
+        .feature-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 32px; margin-bottom: 15px; color: var(--accent); }
+        
+        /* ── FORM SECTION ── */
+        #waitlist { padding: 120px 5%; text-align: center; }
+        .waitlist-container { max-width: 600px; margin: 0 auto; }
+        input { width: 100%; padding: 20px; border: none; border-bottom: 1px solid var(--text); background: transparent; font-size: 18px; margin-bottom: 30px; outline: none; }
+        button { background: var(--accent); color: white; border: none; padding: 20px 60px; font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; transition: 0.3s; width: 100%; }
+        button:hover { letter-spacing: 5px; background: #E65300; }
 
-/* ── HERO ────────────────────────────────────────────────────────── */
-#hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 140px 48px 80px; position: relative; overflow: hidden; }
-.hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 8vw, 110px); font-weight: 300; line-height: 0.95; letter-spacing: -1px; max-width: 900px; }
-.hero-h1 span { display: block; }
-.hero-h1 em { font-style: italic; color: var(--gold); }
-.btn-primary { background: var(--gold); color: var(--charcoal); border: none; padding: 16px 40px; font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; cursor: none; text-decoration: none; display: inline-block; margin-top: 40px; }
-
-/* ── WAITLIST SECTION ────────────────────────────────────────────── */
-#waitlist { background: var(--charcoal); padding: 120px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; }
-.waitlist-form { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 500px; margin-top: 40px; }
-.waitlist-input { background: rgba(255,255,255,0.04); border: 1px solid rgba(184,151,90,0.2); color: var(--ivory); padding: 16px 20px; font-size: 14px; outline: none; transition: all 0.25s; width: 100%; }
-.waitlist-input:focus { border-color: var(--gold); background: rgba(184,151,90,0.05); }
-.btn-submit { background: var(--gold); color: var(--charcoal); border: none; padding: 18px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: none; width: 100%; transition: transform 0.2s; }
-.btn-submit:hover { transform: translateY(-2px); }
-
-/* SUCCESS STATE STYLES */
-.success-container { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.8s ease forwards; }
-.success-card { background: rgba(184,151,90,0.05); border: 1px solid var(--gold); padding: 40px; border-radius: 4px; max-width: 450px; margin-top: 20px; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-</style>
+        .success-box { display: none; padding: 40px; border: 1px solid var(--accent); margin-top: 20px; animation: fadeIn 1s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<nav id="nav">
-  <a href="#" class="nav-logo">Dripp<span class="d-gold">d</span></a>
-  <div class="nav-links">
-    <a href="#how">How It Works</a>
-    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
-  </div>
+<nav>
+    <div class="logo">dripp<span>d</span></div>
+    <a href="#waitlist" style="text-decoration: none; font-size: 10px; font-weight: 700; color: var(--text); letter-spacing: 2px;">JOIN WAITLIST</a>
 </nav>
 
-<section id="hero">
-  <div class="hero-eyebrow" style="color: var(--gold); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;">✦ Delhi NCR · Launching 2026</div>
-  <h1 class="hero-h1">
-    <span>The 60-Minute</span>
-    <em>Fitting Room.</em>
-  </h1>
-  <p style="font-size: 16px; color: rgba(250,250,247,0.5); max-width: 450px; line-height: 1.8; margin-top: 30px;">AI-powered style matching delivered to your door. Try 5 items from local boutiques—only pay for what fits.</p>
-  <a href="#waitlist" class="btn-primary">Secure Early Access</a>
+<header>
+    <div class="status-pill"><div class="pulse"></div> Live Beta: Delhi NCR</div>
+    <h1>The 60-Minute <br><em>Fitting Room</em>.</h1>
+    <p style="max-width: 500px; font-size: 18px; color: var(--muted);">AI-powered curation delivered to your door. Try 5 items from local boutiques—only pay for what fits.</p>
+    <a href="#waitlist" style="margin-top: 40px; display: inline-block;"><button style="width: auto;">Secure Early Access</button></a>
+</header>
+
+<section class="feature-grid">
+    <div class="feature-card">
+        <h3>01. AI-Fit Engine</h3>
+        <p>Our FFI (Fit-First Intelligence) scans 32 anatomical data points from a 3-second selfie to ensure a 90% fit accuracy before the rider leaves the store.</p>
+    </div>
+    <div class="feature-card">
+        <h3>02. The Milk Run</h3>
+        <p>Proprietary hyper-local routing allows our riders to service 5 households in a single 2km loop, keeping our carbon footprint and costs low.</p>
+    </div>
+    <div class="feature-card">
+        <h3>03. Boutique Exclusives</h3>
+        <p>Access curated collections from GK, Hauz Khas, and DLF Emporio boutiques that you won't find on Myntra or Ajio.</p>
+    </div>
 </section>
 
 <section id="waitlist">
-  <div id="form-wrapper" style="width: 100%;">
-    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300;">Be First. <em>Dress First.</em></h2>
-    <p style="color: var(--muted); margin-bottom: 20px;">Join 500+ style-insiders waiting for the launch.</p>
-    
-    <form id="drippd-form" action="https://formspree.io/f/xgoneadj" method="POST" class="waitlist-form">
-      <input class="waitlist-input" type="text" name="name" id="userName" placeholder="Full Name" required>
-      <input class="waitlist-input" type="email" name="email" placeholder="Email Address" required>
-      <input class="waitlist-input" type="tel" name="phone" placeholder="Mobile Number (+91)" required>
-      <button type="submit" id="submit-btn" class="btn-submit">Secure My Spot</button>
-    </form>
-    <p id="form-status" style="margin-top: 15px; font-size: 12px; color: var(--gold);"></p>
-  </div>
+    <div class="waitlist-container">
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 48px; margin-bottom: 40px;">Become a <em>Founding Member</em>.</h2>
+        
+        <form id="drippd-form" action="https://formspree.io/f/xgoneadj" method="POST">
+            <input type="text" name="name" id="userName" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="tel" name="phone" placeholder="WhatsApp Number" required>
+            <button type="submit" id="submit-btn">Enter the Inner Circle</button>
+        </form>
 
-  <div id="success-message" class="success-container">
-    <div style="font-size: 50px; color: var(--gold); margin-bottom: 20px;">✦</div>
-    <div class="success-card">
-      <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 32px; color: var(--gold); margin-bottom: 10px;">You're on the list, <span id="display-name">friend</span>.</h3>
-      <p style="color: var(--ivory); font-size: 14px; line-height: 1.6;">Welcome to the inner circle. We'll reach out as soon as your neighborhood goes live in 2026.</p>
-      <div style="margin-top: 30px; background: var(--gold); color: var(--charcoal); padding: 12px; font-weight: bold; letter-spacing: 2px; font-size: 12px; text-transform: uppercase;">
-        Founding Member #0<span id="member-id"></span>
-      </div>
+        <div id="success-message" class="success-box">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 28px;">Welcome, <span id="display-name">friend</span>.</h3>
+            <p style="font-size: 14px; margin-top: 10px;">You are Founding Member #<span id="member-id"></span>. We'll reach out for your 3D scanning setup shortly.</p>
+        </div>
     </div>
-  </div>
 </section>
 
-<footer style="padding: 60px 20px; text-align: center; border-top: 1px solid rgba(184,151,90,0.1);">
-  <p style="font-size: 11px; color: var(--muted); letter-spacing: 1px;">© 2026 DRIPPD. DELHI NCR, INDIA.</p>
+<footer style="padding: 60px 5%; border-top: 1px solid #E8E5DC; text-align: center; font-size: 10px; letter-spacing: 2px; color: var(--muted);">
+    © 2026 DRIPPD TECHNOLOGIES PVT LTD. | DELHI NCR
 </footer>
 
 <script>
-// CURSOR LOGIC
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`; });
-function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`; requestAnimationFrame(animRing); }
-animRing();
+    const form = document.getElementById("drippd-form");
+    const success = document.getElementById("success-message");
 
-// FORMSPREE SUBMISSION LOGIC
-const form = document.getElementById("drippd-form");
-const wrapper = document.getElementById("form-wrapper");
-const success = document.getElementById("success-message");
-const status = document.getElementById("form-status");
+    form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        const nameInput = document.getElementById("userName").value;
+        const firstName = nameInput.split(' ')[0];
 
-form.addEventListener("submit", async function(event) {
-  event.preventDefault();
-  status.innerHTML = "Processing your entry...";
-  const nameInput = document.getElementById("userName").value;
-  const firstName = nameInput.split(' ')[0];
-  
-  const data = new FormData(event.target);
-  
-  fetch(event.target.action, {
-    method: 'POST',
-    body: data,
-    headers: { 'Accept': 'application/json' }
-  }).then(response => {
-    if (response.ok) {
-      wrapper.style.display = "none";
-      success.
+        fetch(event.target.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            if (response.ok) {
+                form.style.display = "none";
+                success.style.display = "block";
+                document.getElementById("display-name").innerHTML = firstName;
+                document.getElementById("member-id").innerHTML = Math.floor(Math.random() * 900) + 100;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
